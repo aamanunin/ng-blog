@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {IUser} from '../../shared/intarfeces';
+import {IUser} from '../../shared/interfaces';
 
 @Component({
   selector: 'app-login-page',
