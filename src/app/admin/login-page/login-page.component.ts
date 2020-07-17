@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {IUser} from '../../shared/interfaces';
+import {AuthService} from '../shared/services/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -10,8 +12,13 @@ import {IUser} from '../../shared/interfaces';
 export class LoginPageComponent implements OnInit {
 
   form: FormGroup;
+  submitted = false;
 
-  constructor() { }
+  constructor(
+    private auth: AuthService,
+    private router: Router
+  ) {
+  }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -25,11 +32,16 @@ export class LoginPageComponent implements OnInit {
       return;
     }
 
+    this.submitted = true;
+
     const user: IUser = {
       email: this.form.value.email,
       password: this.form.value.password
     };
 
-    console.log(user);
+    this.auth.login(user).subscribe(() => {
+      this.submitted = false;
+      this.router.navigate(['/admin', 'dashboard']);
+    });
   }
 }
