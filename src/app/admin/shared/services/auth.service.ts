@@ -1,13 +1,15 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {tap} from 'rxjs/operators';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {Observable, Subject, throwError} from 'rxjs';
+import {catchError, tap} from 'rxjs/operators';
 import {IUser} from '../../../shared/interfaces';
 import {environment} from '../../../../environments/environment';
 import {IFbAuthResponse} from '../../../../environments/interfaces';
 
 @Injectable()
 export class AuthService {
+
+  public error$: Subject<string> = new Subject<string>();
 
   constructor(private http: HttpClient) {
   }
@@ -27,7 +29,28 @@ export class AuthService {
     const body = {returnSecureToken: true, ...user};
 
     return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.apiKey}`, body)
-      .pipe(tap(this.setToken));
+      .pipe(
+        tap(this.setToken),
+        catchError(this.handleError.bind(this))
+      );
+  }
+
+  handleError(error: HttpErrorResponse) {
+    const {message} = error.error.error;
+
+    switch (message) {
+      case 'INVALID_EMAIL':
+        this.error$.next('Некорректный Email');
+        break;
+      case 'EMAIL_NOT_FOUND':
+        this.error$.next('Email не найден');
+        break;
+      case 'INVALID_PASSWORD':
+        this.error$.next('Некорректный Password');
+        break;
+    }
+
+    return throwError(message);
   }
 
   logout() {
