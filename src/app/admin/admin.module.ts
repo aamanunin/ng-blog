@@ -10,6 +10,7 @@ import {DashboardPageComponent} from './dashboard-page/dashboard-page.component'
 import {EditPageComponent} from './edit-page/edit-page.component';
 import {CreatePageComponent} from './create-page/create-page.component';
 import {AuthService} from './shared/services/auth.service';
+import {AuthGuard} from './shared/services/auth.guard';
 
 @NgModule({
   declarations: [AdminLayoutComponent, LoginPageComponent, DashboardPageComponent, EditPageComponent, CreatePageComponent, ],
@@ -23,9 +24,9 @@ import {AuthService} from './shared/services/auth.service';
       {
         path: '', component: AdminLayoutComponent, children: [
           {path: 'login', component: LoginPageComponent},
-          {path: 'dashboard', component: DashboardPageComponent},
-          {path: 'post/:id/edit', component: EditPageComponent},
-          {path: 'create', component: CreatePageComponent}
+          {path: 'dashboard', component: DashboardPageComponent, canActivate: [AuthGuard]},
+          {path: 'post/:id/edit', component: EditPageComponent, canActivate: [AuthGuard]},
+          {path: 'create', component: CreatePageComponent, canActivate: [AuthGuard]}
         ]
       },
     ])
@@ -33,7 +34,7 @@ import {AuthService} from './shared/services/auth.service';
   exports: [
     RouterModule
   ],
-  providers: [AuthService]
+  providers: [AuthService, AuthGuard]
 })
 export class AdminModule {
 }
