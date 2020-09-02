@@ -10,9 +10,10 @@ import {DashboardPageComponent} from './dashboard-page/dashboard-page.component'
 import {EditPageComponent} from './edit-page/edit-page.component';
 import {CreatePageComponent} from './create-page/create-page.component';
 import {AuthGuard} from './shared/services/auth.guard';
+import {SearchPipe} from './shared/search.pipe';
 
 @NgModule({
-  declarations: [AdminLayoutComponent, LoginPageComponent, DashboardPageComponent, EditPageComponent, CreatePageComponent, ],
+  declarations: [AdminLayoutComponent, LoginPageComponent, DashboardPageComponent, EditPageComponent, CreatePageComponent, SearchPipe],
   imports: [
     CommonModule,
     FormsModule,

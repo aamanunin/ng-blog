@@ -10,7 +10,8 @@ import {Subscription} from 'rxjs';
 })
 export class DashboardPageComponent implements OnInit, OnDestroy {
   posts: IPost[] = [];
-  pSub: Subscription;
+  pSub: Subscription = null;
+  searchStr = '';
 
   constructor(private postsService: PostsService) { }
 
