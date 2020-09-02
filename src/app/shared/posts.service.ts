@@ -23,4 +23,19 @@ export class PostsService {
         };
       }));
   }
+
+  getAll(): Observable<IPost[]> {
+    return this.http.get(`${environment.fbDbUrl}/posts.json`)
+      .pipe(map((response) => {
+        return Object.keys(response).map((dbid) => {
+          const post = response[dbid];
+
+          return {
+            id: dbid,
+            ...post,
+            date: new Date(post.date)
+          };
+        });
+      }));
+  }
 }
