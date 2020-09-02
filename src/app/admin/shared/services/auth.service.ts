@@ -6,7 +6,7 @@ import {IUser} from '../../../shared/interfaces';
 import {environment} from '../../../../environments/environment';
 import {IFbAuthResponse} from '../../../../environments/interfaces';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class AuthService {
 
   public error$: Subject<string> = new Subject<string>();
