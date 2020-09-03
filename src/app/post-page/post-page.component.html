@@ -1,20 +1,20 @@
-<div class="post">
+<div *ngIf="post$ | async as post; else loading" class="post">
   <div class="header">
-    <h1>Title</h1>
+    <h1>{{post.title}}</h1>
 
     <button class="btn btn-link" routerLink="/">На главную</button>
   </div>
 
   <div class="info">
-    <strong>Тут автор</strong>
-    <small>14.01.2020</small>
+    <strong>{{post.author}}</strong>
+    <small>{{post.date | date:'medium':null:'ru'}}</small>
   </div>
 
   <div>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda aut doloremque doloribus expedita fuga fugit hic, laboriosam laborum magni, mollitia nihil perferendis recusandae soluta vero voluptatum! A eius illo ipsum libero magni molestiae quae quam rerum tenetur voluptas. Aliquam blanditiis cupiditate debitis, ea eveniet facilis laborum modi non quae velit!</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda aut doloremque doloribus expedita fuga fugit hic, laboriosam laborum magni, mollitia nihil perferendis recusandae soluta vero voluptatum! A eius illo ipsum libero magni molestiae quae quam rerum tenetur voluptas. Aliquam blanditiis cupiditate debitis, ea eveniet facilis laborum modi non quae velit!</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda aut doloremque doloribus expedita fuga fugit hic, laboriosam laborum magni, mollitia nihil perferendis recusandae soluta vero voluptatum! A eius illo ipsum libero magni molestiae quae quam rerum tenetur voluptas. Aliquam blanditiis cupiditate debitis, ea eveniet facilis laborum modi non quae velit!</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda aut doloremque doloribus expedita fuga fugit hic, laboriosam laborum magni, mollitia nihil perferendis recusandae soluta vero voluptatum! A eius illo ipsum libero magni molestiae quae quam rerum tenetur voluptas. Aliquam blanditiis cupiditate debitis, ea eveniet facilis laborum modi non quae velit!</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda aut doloremque doloribus expedita fuga fugit hic, laboriosam laborum magni, mollitia nihil perferendis recusandae soluta vero voluptatum! A eius illo ipsum libero magni molestiae quae quam rerum tenetur voluptas. Aliquam blanditiis cupiditate debitis, ea eveniet facilis laborum modi non quae velit!</p>
+    <quill-view-html [content]="post.text"></quill-view-html>
   </div>
 </div>
+
+<ng-template #loading>
+  <div class="text-center">Загрузка данных...</div>
+</ng-template>
